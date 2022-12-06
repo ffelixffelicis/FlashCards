@@ -1,5 +1,6 @@
-import firebase from "firebase";
-import {getFirestore} from "@firebase/firestore";
+import{getAnalytics} from "firebase/analytics";
+import{initializeApp} from "firebase/app";
+import{getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut} from "firebase/auth";
 const firebaseConfig = {
     apiKey: "AIzaSyCkXF6Nn-lD5QAOd172ToGBj912pUTkAjo",
     authDomain: "flashcards-73130.firebaseapp.com",
@@ -10,8 +11,12 @@ const firebaseConfig = {
     measurementId: "G-YX1ENJH76V"
   };
 
-  const firebaseApp = firebase.initializeApp(firebaseConfig);
-  const firestore = getFirestore(firebaseConfig);
-  const db = firebaseApp.firestore();
+  const app = initializeApp(firebaseConfig)
+  getAnalytics(app)
+  const auth = getAuth(app)
 
-  export default db;
+  export const signUp = async(email,password) => {await createUserWithEmailAndPassword(auth,email,password)};
+
+  export const signIn = async(email,password) => {await signInWithEmailAndPassword(auth,email,password)};
+
+
